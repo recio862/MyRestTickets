@@ -26,7 +26,7 @@ def post_ticket(project, ticket):
     if not dbservices.validate_ticket(project, request.json):
         abort(400)
     map = dbservices.post_ticket(project, request.json)
-    return jsonify(map)
+    return 201
 
 
 
