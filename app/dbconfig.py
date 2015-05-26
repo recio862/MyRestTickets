@@ -9,7 +9,7 @@ __DB = 'database'
 
 mysql = { __HOST_NAME : 'localhost',
           __USER_NAME : 'root',
-          __PASSWORD : 'r5n1l5b1m2j2',
+          __PASSWORD : 'test123',
           __DB : 'resttickets'}
 
 db = pymysql.connect(host = mysql.get(__HOST_NAME), # your host, usually localhost
