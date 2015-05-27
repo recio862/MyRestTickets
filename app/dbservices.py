@@ -8,19 +8,21 @@ from app.dbconfig import db
 def get_date():
     return strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
+
 def convert_db_table_to_map(rows, column_metadata):
-    map  = {}
+    map = {}
     i = 0
     j = -1
 
     for row in rows:
-        i+=1
+        i += 1
         map['Ticket #' + str(i)] = {}
         for col in row:
-            j+=1
+            j += 1
             map['Ticket #' + str(i)][j] = col
             print(col)
     return map
+
 
 def get_all_tickets(project):
     cur = db.cursor()
@@ -40,6 +42,7 @@ def get_ticket(project, ticket):
     db.commit()
     cur.close()
 
+
 def validate_ticket(project, json):
     if json.get('ticket_name') and json.get('ticket_description'):
         return True
@@ -57,9 +60,8 @@ def post_ticket(project, json):
     return get_all_tickets(project)
 
 
-def post_user(request_body):
+def post_project(json, username):
     cur = db.cursor()
-    cmd = 'INSERT INTO users(username, password, email) VALUES (%s, %s, %s)'
-    cur.execute(cmd, (request_body.get('username'), request_body.get('password'), request_body.get('email')))
-    db.commit()
-    cur.close()
+    cmd = 'INSERT INTO tickets(project_name, project_category, project_description, date_created, created_by) ' \
+          'VALUES (%s, %s, %s, %s)'
+    cur.execute(cmd, (json.get, json.get('ticket_name'), json.get('ticket_description'), get_date()))
