@@ -34,16 +34,17 @@ def authenticate_with_form_fields(fn):
 def authenticate_with_sessionid(fn):
     @wraps(fn)
     def auth_user(*args, **kwargs):
-        verified = False
-        print(session.get('restticketssid'))
+        verified = None
         if 'restticketssid' in session:
             sessionid = session.get('restticketssid')
-            verified = verify_session(str(sessionid)[2:len(str(sessionid)) - 1])
+            verified = get_username_from_session()
         return fn(verified)
 
     return auth_user
 
-
+#verify the session for a user who already logged in and
+#carries the sessionid in their cookie
+#return false if session doesn't match database
 def verify_session(sessionid):
     try:
         cur = db.cursor()
@@ -69,14 +70,14 @@ def verify_login(username, password):
         db.commit()
         rows = cur.fetchall()
         if rows:
-            return True
+            return username
     except:
         raise
     finally:
         if cur:
             cur.close()
 
-    return False  # login error
+    return None  # login error
 
 
 def validate_password(password, confirmation):
@@ -136,23 +137,59 @@ def validate_new_user(fn):
     return validate
 
 
-def post_user(request_body):
-    cur = db.cursor()
-    cmd = 'INSERT INTO users(username, password, email, sessionid, sessionstate) VALUES (%s, %s, %s, %s, %s)'
+def get_user_from_session(fn):
+    @wraps(fn)
+    def retrieve(*args, **kwargs):
+        sessionid = session['restticketssid']
+        username = None
+        try:
+            cur = db.cursor()
+            cmd = 'SELECT * FROM users WHERE users.sessionid=%s AND users.sessionstate=%s'
+            cur.execute(cmd, (str(sessionid), 1))
+            rows = cur.fetchall()
+            if rows:
+                if rows[0]:
+                    username = rows[0][0]
+        except:
+            raise
+        finally:
+            if cur:
+                cur.close()
+        f = fn(username)
+        return f
+    return retrieve
+
+
+def get_username_from_session():
+    sessionid = session['restticketssid']
+    username = None
+    try:
+        cur = db.cursor()
+        cmd = 'SELECT * FROM users WHERE users.sessionid=%s AND users.sessionstate=%s'
+        cur.execute(cmd, (str(sessionid), 1))
+        rows = cur.fetchall()
+        if rows:
+            if rows[0]:
+                username = rows[0][0]
+    except:
+        raise
+    finally:
+        if cur:
+            cur.close()
+    return username
+
+def start_session(username = None):
     sessionid = generate_session()
     session['restticketssid'] = sessionid
     print(sessionid)
-    print(session.get('restticketssid'))
-
-    # if not sessionid['restticketssid']
-    # error handling - disabled cookies
-    cur.execute(cmd,
-                (request_body.get('username'), request_body.get('password'), request_body.get('email'), sessionid, '1'))
-
-    cmd = 'INSERT INTO projects_to_users(p_id, username) VALUES (%s, %s)'
-    db.commit()
-    cur.close()
-
+    if username:
+        cur = db.cursor()
+        cmd = 'UPDATE users SET users.sessionid=%s, users.sessionstate=%s WHERE users.username=%s'
+        cur.execute(cmd, (sessionid, 1, username))
+        db.commit()
+        cur.close()
+    return sessionid
 
 def generate_session():
-    return base64.b64encode(os.urandom(16))
+    sessionid = base64.b64encode(os.urandom(16))
+    return str(sessionid)[2:len(str(sessionid)) - 1]
