@@ -1,0 +1,80 @@
+h1.page-header {
+    margin-top: -5px;
+}
+
+.sidebar {
+    padding-left: 0;
+}
+
+.main-container {
+    background: #FFF;
+    padding-top: 15px;
+    margin-top: -20px;
+}
+
+.footer {
+    width: 100%;
+}
+
+
+
+.navbar-default {
+    background-color: black;
+    border-color: black;
+}
+
+ul.nav.navbar-nav.navbar-right li a.hello{
+    color: white;
+    /*color: lightseagreen;*/
+}
+
+
+/*<div class="container-fluid main-container">*/
+    /*<div class="col-md-2 sidebar">*/
+        /*<ul class="nav nav-pills nav-stacked">*/
+
+
+/*.container-fluid.main-container div.col-md-2.sidebar ul.nav.nav-pills.nav-stacked a{*/
+    /*background-color: lightseagreen;*/
+    /*color: white;*/
+/*}*/
+
+/*.container-fluid.main-container div.col-md-2.sidebar ul.nav.nav-pills.nav-stacked a:hover{*/
+    /*background-color: grey;*/
+/*}*/
+
+.container-fluid.main-container div.col-md-2.sidebar ul.nav.nav-pills.nav-stacked li.myactive a{
+    background-color: lightseagreen;
+    color: black;
+}
+
+
+.container-fluid.main-container div.col-md-2.sidebar ul.nav.nav-pills.nav-stacked li.myinactive a{
+    background-color: lightseagreen;
+    color: white;
+}
+
+.container-fluid.main-container div.col-md-2.sidebar ul.nav.nav-pills.nav-stacked li.myinactive a:hover{
+    background-color: darkgrey;
+    color: white;
+}
+
+.yo{
+    color:black;
+}
+.yo:hover{
+    color:black;
+}
+
+/*.myactive a{*/
+    /*background-color:lightseagreen;*/
+    /*border-radius: 5px;*/
+/*}*/
+/*.myinactive a:hover{*/
+    /*background-color:blue;*/
+    /*border-radius: 5px;*/
+/*}*/
+/*.myactive a:hover{*/
+    /*background-color:blue;*/
+    /*border-radius: 5px;*/
+/*}*/

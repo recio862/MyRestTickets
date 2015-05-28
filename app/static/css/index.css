@@ -1,0 +1,23 @@
+/*ul.nav navbar-nav li a, ul.nav li a:visited {
+    color: lightseagreen !important;
+}*/
+
+ul.nav.navbar-nav.navbar-right li a.hello{
+    color: white;
+    /*color: lightseagreen;*/
+}
+
+.navbar.navbar-inverse.navbar-fixed-top div.container div.navbar-header a.navbar-brand{
+    color: white;
+}
+
+/*ul.list-group li{*/
+    /*color: lightseagreen;*/
+
+/*}*/
+
+h3{
+    color: lightseagreen;
+}
+
+
