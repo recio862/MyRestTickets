@@ -192,11 +192,16 @@ def start_session(username = None):
 
 
 def remove_user_from_session(username):
-    cur = db.cursor()
-    cmd = 'UPDATE users SET users.sessionid=%s, users.sessionstate=%s WHERE users.username=%s'
-    cur.execute(cmd, (0, 0, username))
-    db.commit()
-    cur.close()
+    try:
+        cur = db.cursor()
+        cmd = 'UPDATE users SET users.sessionid=%s, users.sessionstate=%s WHERE users.username=%s'
+        cur.execute(cmd, (0, 0, username))
+        db.commit()
+    except:
+        raise
+    finally:
+        if cur:
+            cur.close()
 
 
 def generate_session():

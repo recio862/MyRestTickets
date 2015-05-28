@@ -7,6 +7,9 @@ from sqlalchemy import Column, Integer, String, DateTime
 Base = declarative_base()
 '''
 Class representing the MySQL table for Tickets
+Note: Not currently being used, I mainly put it
+here to outline the structure of the table in the database
+
 '''
 class Ticket(Base):
     __tablename__ = 'tickets'

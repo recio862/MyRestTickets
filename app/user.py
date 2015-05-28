@@ -4,7 +4,12 @@ from sqlalchemy import Column, Integer, String
 
 
 Base = declarative_base()
+'''
+Class representing the MySQL table for Users
+Note: Not currently being used, I mainly put it
+here to outline the structure of the table in the database
 
+'''
 class User(Base):
     __tablename__ = 'users'
     username = Column(String , primary_key=True)

@@ -35,8 +35,8 @@ def post_project(username):
     print(username)
     if not request.json or not username:
         abort(400)
-    map = dbservices.post_project(request.json, username)
-    return 'hi'
+    dbservices.post_project(request.json, username)
+    return jsonify(map)
 
 @app.route('/')
 @authservices.authenticate_with_sessionid
