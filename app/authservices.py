@@ -36,6 +36,7 @@ def authenticate_with_sessionid(fn):
     def auth_user(*args, **kwargs):
         verified = None
         if 'restticketssid' in session:
+            print('hi')
             sessionid = session.get('restticketssid')
             verified = get_username_from_session()
         return fn(verified)
@@ -181,7 +182,6 @@ def get_username_from_session():
 def start_session(username = None):
     sessionid = generate_session()
     session['restticketssid'] = sessionid
-    print(sessionid)
     if username:
         cur = db.cursor()
         cmd = 'UPDATE users SET users.sessionid=%s, users.sessionstate=%s WHERE users.username=%s'
@@ -189,6 +189,15 @@ def start_session(username = None):
         db.commit()
         cur.close()
     return sessionid
+
+
+def remove_user_from_session(username):
+    cur = db.cursor()
+    cmd = 'UPDATE users SET users.sessionid=%s, users.sessionstate=%s WHERE users.username=%s'
+    cur.execute(cmd, (0, 0, username))
+    db.commit()
+    cur.close()
+
 
 def generate_session():
     sessionid = base64.b64encode(os.urandom(16))
