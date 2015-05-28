@@ -11,8 +11,6 @@ import os, base64
 def get_date():
     return strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
-
-
 def get_all_tickets(project, type = 'map'):
     result = None
     try:
