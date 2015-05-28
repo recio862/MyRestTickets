@@ -9,13 +9,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Thumbnail Gallery - Start Bootstrap Template</title>
+    <title>RestTickets</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="/static/css/thumbnail-gallery.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -40,24 +40,37 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Start Bootstrap</a>
+            <a class="navbar-brand" href="http://127.0.0.1:5000/">@RestTickets</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#">About</a>
+                    <a href="http://127.0.0.1:5000/api">api</a>
                 </li>
                 <li>
-                    <a href="#">Services</a>
+                    <a href="#">about</a>
                 </li>
                 <li>
-                    <a href="#">Contact</a>
+                    <a href="#">contact</a>
                 </li>
+
             </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li >
+                <a href = "http://127.0.0.1:5000/logout">logout </a>
+                    </li>
+                <li >
+                    <a class = "hello">@{{ username }}</a>
+                </li>
+
+            </ul>
+
         </div>
+
         <!-- /.navbar-collapse -->
     </div>
+
     <!-- /.container -->
 </nav>
 
@@ -67,42 +80,42 @@
     <div class="row">
 
         <div class="col-lg-12">
-            <h1 class="page-header"><br><br>RestTickets Dashboard
-             </h1>
-        <!--<div class="dropdown"><font size = "4" >Select a project</font>
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
-                        data-toggle="dropdown" aria-expanded="true">
-                    Dropdown
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" >
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-                </ul>
-            </div>-->
+            <h1 class="page-header"><br><br>@RestTickets
+            </h1>
+            <!--<div class="dropdown"><font size = "4" >Select a project</font>
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                            data-toggle="dropdown" aria-expanded="true">
+                        Dropdown
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" >
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+                    </ul>
+                </div>-->
 
         </div>
         {% for ticket in tickets %}
-        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-            <div class="thumbnail">
-                <!--img src="..." alt="..."-->
-                <div class="caption">
-                    <h3>{{ ticket.2 }}</h3>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <div id = "totoy" class="thumbnail">
+                    <!--img src="..." alt="..."-->
+                    <div class="caption">
+                        <h3>{{ ticket.2 }}</h3>
 
-                     <!--<p>
-                        <!--<a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default"
-                                                                                       role="button">Button</a></p>-->
-                    <ul class="list-group">
-                        <li class="list-group-item">Project ID: {{ ticket.1 }}</li>
-                        <li class="list-group-item">Ticket Name: {{ ticket.2 }}</li>
-                        <li class="list-group-item">Ticket Description: {{ ticket.3 }}</li>
-                        <li class="list-group-item">Date Created: {{ ticket.4 }}</li>
-                    </ul>
+                        <!--<p>
+                           <!--<a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default"
+                                                                                          role="button">Button</a></p>-->
+                        <ul class="list-group">
+                            <li class="list-group-item">Project ID: {{ ticket.1 }}</li>
+                            <li class="list-group-item">Ticket Name: {{ ticket.2 }}</li>
+                            <li class="list-group-item">Ticket Description: {{ ticket.3 }}</li>
+                            <li class="list-group-item">Date Created: {{ ticket.4 }}</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
         {% endfor %}
     </div>
 
@@ -113,7 +126,7 @@
     <footer>
         <div class="row">
             <div class="col-lg-12">
-                <p>Copyright &copy; Your Website 2014</p>
+                <p>Copyright &copy; @RestTickets 2015</p>
             </div>
         </div>
     </footer>
