@@ -50,7 +50,8 @@ def get_project_for_user(username):
         cur = db.cursor()
         cmd = 'SELECT * FROM projects_to_users WHERE projects_to_users.username=%s'
         cur.execute(cmd, username)
-        result = cur.fetchone()[0]
+        if (cur.fetchone()):
+            result = cur.fetchone()[0]
     except:
         raise
     finally:
@@ -67,9 +68,9 @@ def post_user(request_body):
         #print(session['restticketssid'])
         # if not sessionid['restticketssid']
         # error handling - disabled cookies
-        sessionid = authservices.start_session
-        cur.execute(cmd,
-                (request_body.get('username'), request_body.get('password'), request_body.get('email'), sessionid, '1'))
+        sessionid = authservices.start_session()
+        print(sessionid)
+        cur.execute(cmd,(request_body.get('username'), request_body.get('password'), request_body.get('email'), sessionid, '1'))
         #this is now done in post_project
         #cmd = 'INSERT INTO projects_to_users(p_id, username) VALUES (%s, %s)'
         db.commit()
@@ -81,6 +82,7 @@ def post_user(request_body):
 
 
 def post_ticket(project, json):
+    print('here')
     result = None
     try:
         cur = db.cursor()
@@ -88,7 +90,7 @@ def post_ticket(project, json):
             'VALUES (%s, %s, %s, %s)'
         cur.execute(cmd, (project, json.get('ticket_name'), json.get('ticket_description'), get_date()))
         db.commit()
-        result = get_all_tickets(project)
+        result = { 'xhref' : (str(cur.lastrowid)) }
     except:
         raise
     finally:
@@ -105,7 +107,7 @@ def post_project(json, username):
           'VALUES (%s, %s, %s, %s, %s)'
         cur.execute(cmd, (json.get('project_name'), json.get('project_category'), json.get('project_description'), get_date(), username))
         cmd = 'INSERT INTO projects_to_users(p_id, username) VALUES (%s, %s)'
-        result = cur.lastrowid #project id
+        result = { 'xhref' : (str(cur.lastrowid)) } #project id
         cur.execute(cmd, (cur.lastrowid, username))
         db.commit()
         cur.close()
