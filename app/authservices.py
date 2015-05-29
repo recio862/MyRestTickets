@@ -182,11 +182,16 @@ def start_session(username = None):
     sessionid = generate_session()
     session['restticketssid'] = sessionid
     if username:
-        cur = db.cursor()
-        cmd = 'UPDATE users SET users.sessionid=%s, users.sessionstate=%s WHERE users.username=%s'
-        cur.execute(cmd, (sessionid, 1, username))
-        db.commit()
-        cur.close()
+        try:
+            cur = db.cursor()
+            cmd = 'UPDATE users SET users.sessionid=%s, users.sessionstate=%s WHERE users.username=%s'
+            cur.execute(cmd, (sessionid, 1, username))
+            db.commit()
+        except:
+            db.rollback()
+            raise
+        finally:
+            cur.close()
     return sessionid
 
 
@@ -197,6 +202,7 @@ def remove_user_from_session(username):
         cur.execute(cmd, (0, 0, username))
         db.commit()
     except:
+        db.rollback()
         raise
     finally:
         if cur:
