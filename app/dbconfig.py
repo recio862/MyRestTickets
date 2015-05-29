@@ -7,6 +7,7 @@ __HOST_NAME = 'hostname'
 __PASSWORD = 'password'
 __DB = 'database'
 
+#mysql config
 mysql = {__HOST_NAME: 'localhost',
          __USER_NAME: 'root',
          __PASSWORD: 'r5n1l5b1m2j2',  # yes, i'm aware you can see this :)
