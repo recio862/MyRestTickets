@@ -20,7 +20,7 @@ def get_ticket(project, ticket):
     return jsonify(map)
 
 
-@app.route('/projects/<int:project>/tickets/5', methods=['POST'])
+@app.route('/projects/<int:project>/tickets/', methods=['POST'])
 def post_ticket(project):
     if not request.json:
         abort(400)
