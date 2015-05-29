@@ -113,7 +113,7 @@ def validate_username(username):
     return False  # error checking db or user exists
 
 
-# To-do: email validation
+# Todo: email validation
 def validate_email(email):
     return True
 

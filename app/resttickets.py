@@ -98,7 +98,7 @@ def api_page(username):
 def logout(username):
     if username:
         authservices.remove_user_from_session(username)
-    return redirect(urlservices.__base_url__)
+    return redirect(urlservices.base_url)
 
 
 @app.route('/login', methods=['POST'])
@@ -114,7 +114,7 @@ def user_login_form(username):
 @authservices.authenticate_with_auth_header
 def user_login_auth(key):
     if not key:
-        return 0
+        return '0'
     return key
 
 
