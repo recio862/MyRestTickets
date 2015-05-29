@@ -14,10 +14,10 @@ def get_all_tickets(project):
     return jsonify(map)
 
 
-# @app.route('/projects/<int:project>/tickets/<int:ticket>', methods=['GET'])
-# def get_ticket(project, ticket):
-#     map = dbservices.get_ticket(project, ticket)
-#     return jsonify(map)
+@app.route('/projects/<int:project>/tickets/<int:ticket>', methods=['GET'])
+def get_ticket(project, ticket):
+    map = dbservices.get_ticket(project, ticket)
+    return jsonify(map)
 
 
 @app.route('/projects/<int:project>/tickets/', methods=['POST'])
