@@ -36,7 +36,6 @@ def authenticate_with_sessionid(fn):
     def auth_user(*args, **kwargs):
         verified = None
         if 'restticketssid' in session:
-            print('hi')
             sessionid = session.get('restticketssid')
             verified = get_username_from_session()
         return fn(verified)

@@ -12,6 +12,7 @@ def get_date():
     return strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
 def get_all_tickets(project, type = 'map'):
+    print(project)
     result = None
     try:
         cur = db.cursor()
@@ -50,8 +51,7 @@ def get_project_for_user(username):
         cur = db.cursor()
         cmd = 'SELECT * FROM projects_to_users WHERE projects_to_users.username=%s'
         cur.execute(cmd, username)
-        if (cur.fetchone()):
-            result = cur.fetchone()[0]
+        result = cur.fetchone()[0]
     except:
         raise
     finally:
@@ -69,7 +69,6 @@ def post_user(request_body):
         # if not sessionid['restticketssid']
         # error handling - disabled cookies
         sessionid = authservices.start_session()
-        print(sessionid)
         cur.execute(cmd,(request_body.get('username'), request_body.get('password'), request_body.get('email'), sessionid, '1'))
         #this is now done in post_project
         #cmd = 'INSERT INTO projects_to_users(p_id, username) VALUES (%s, %s)'
@@ -82,7 +81,6 @@ def post_user(request_body):
 
 
 def post_ticket(project, json):
-    print('here')
     result = None
     try:
         cur = db.cursor()

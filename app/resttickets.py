@@ -22,12 +22,10 @@ def get_all_tickets(project):
 
 @app.route('/projects/<int:project>/tickets/', methods=['POST'])
 def post_ticket(project):
-    print('here')
-    # if not request.json:
-    #     abort(400)
-    # print('here')
-    # if not dbservices.validate_ticket(project, request.json):
-    #     abort(400)
+    if not request.json:
+        abort(400)
+    if not dbservices.validate_ticket(project, request.json):
+        abort(400)
 
     location = dbservices.post_ticket(project, request.json)
     return jsonify(location)
@@ -35,7 +33,6 @@ def post_ticket(project):
 @app.route('/projects/', methods=['POST'])
 @authservices.get_user_from_session
 def post_project(username):
-    print(username)
     if not request.json or not username:
         abort(400)
     location = dbservices.post_project(request.json, username)
