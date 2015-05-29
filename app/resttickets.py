@@ -30,7 +30,6 @@ def post_ticket(project):
     #     abort(400)
 
     location = dbservices.post_ticket(project, request.json)
-    print(location)
     return jsonify(location)
 
 @app.route('/projects/', methods=['POST'])
