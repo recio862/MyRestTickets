@@ -9,14 +9,14 @@ import re
 
 @app.route('/projects/<int:project>/tickets', methods=['GET'])
 def get_all_tickets(project):
-    map = dbservices.get_all_tickets(project)
-    return jsonify(map)
+    tckts_dict = dbservices.get_all_tickets(project)
+    return jsonify(tckts_dict)
 
 
 @app.route('/projects/<int:project>', methods=['GET'])
 def get_project(project):
-    map = dbservices.get_project(project)
-    return jsonify(map)
+    prjct_dict = dbservices.get_project(project)
+    return jsonify(prjct_dict)
 
 
 @app.route('/projects/<int:project>', methods=['DELETE'])
@@ -27,8 +27,8 @@ def delete_project(project):
 
 @app.route('/projects/<int:project>/tickets/<int:ticket>', methods=['GET'])
 def get_ticket(project, ticket):
-    map = dbservices.get_ticket(project, ticket)
-    return jsonify(map)
+    tckt_map = dbservices.get_ticket(project, ticket)
+    return jsonify(tckt_map)
 
 
 @app.route('/projects/<int:project>/tickets/<int:ticket>', methods=['PUT'])
@@ -38,8 +38,8 @@ def update_ticket(project, ticket):
 
     location = dbservices.update_ticket(project, ticket, request.json)
     location = urlservices.get_ticket_url(project, location.get('xhref'))
-    location_map = {'location': location}
-    return jsonify(location_map), 201, location_map
+    location_dict = {'location': location}
+    return jsonify(location_dict), 201, location_dict
 
 
 @app.route('/projects/<int:project>/tickets/<int:ticket>', methods=['DELETE'])
@@ -68,8 +68,8 @@ def post_project(username):
         abort(400)
     location = dbservices.post_project(request.json, username)
     location = urlservices.get_project_url(location.get('xhref'))
-    location_map = {'location': location}
-    return jsonify(location_map), 201, location_map
+    location_dict = {'location': location}
+    return jsonify(location_dict), 201, location_dict
 
 @app.route('/')
 @authservices.authenticate_with_sessionid
