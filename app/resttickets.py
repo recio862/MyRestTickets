@@ -14,20 +14,24 @@ def get_all_tickets(project):
     return jsonify(map)
 
 
-@app.route('/projects/<int:project>/tickets/<int:ticket>', methods=['GET'])
-def get_ticket(project, ticket):
-    map = dbservices.get_ticket(project, ticket)
-    return jsonify(map)
+# @app.route('/projects/<int:project>/tickets/<int:ticket>', methods=['GET'])
+# def get_ticket(project, ticket):
+#     map = dbservices.get_ticket(project, ticket)
+#     return jsonify(map)
 
 
 @app.route('/projects/<int:project>/tickets/', methods=['POST'])
 def post_ticket(project):
-    if not request.json:
-        abort(400)
-    if not dbservices.validate_ticket(project, request.json):
-        abort(400)
-    map = dbservices.post_ticket(project, request.json)
-    return jsonify(map)
+    print('here')
+    # if not request.json:
+    #     abort(400)
+    # print('here')
+    # if not dbservices.validate_ticket(project, request.json):
+    #     abort(400)
+
+    location = dbservices.post_ticket(project, request.json)
+    print(location)
+    return jsonify(location)
 
 @app.route('/projects/', methods=['POST'])
 @authservices.get_user_from_session
@@ -35,8 +39,9 @@ def post_project(username):
     print(username)
     if not request.json or not username:
         abort(400)
-    dbservices.post_project(request.json, username)
-    return jsonify(map)
+    location = dbservices.post_project(request.json, username)
+    #todo (optional) also set location header
+    return jsonify(location)
 
 @app.route('/')
 @authservices.authenticate_with_sessionid
@@ -44,8 +49,10 @@ def home_page(username):
     if not username:
         return render_template('signin.html')
     else:
+        ticket_list = []
         project = dbservices.get_project_for_user(username)
-        ticket_list = dbservices.get_all_tickets(project, type = 'list')
+        if project:
+            ticket_list = dbservices.get_all_tickets(project, type = 'list')
         return render_template('index2.html', tickets=ticket_list, username = username)
 
 @app.route('/api')
@@ -86,11 +93,12 @@ def user_login_auth(key):
 @authservices.validate_new_user
 def post_user(request_body):
     if not request_body:
-        return 0
+        return '0'
     # return render_template('dashboard.html')
     else:
         dbservices.post_user(request_body)
-    return request_body
+    print('test')
+    return '1'
 
 
 _paragraph_re = re.compile(r'(?:\r\n|\r(?!\n)|\n){2,}')
