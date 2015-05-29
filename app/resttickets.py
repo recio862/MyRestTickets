@@ -3,30 +3,33 @@ __author__ = 'rjr862'
 from flask import Flask, jsonify, request, abort, redirect
 from flask import render_template
 from jinja2 import evalcontextfilter, Markup, escape
-from app import dbservices, app, authservices
+from app import dbservices, app, authservices, urlservices
 import re
 
-__base_url__ = "http://127.0.0.1:5000/"
 
 @app.route('/projects/<int:project>/tickets', methods=['GET'])
 def get_all_tickets(project):
     map = dbservices.get_all_tickets(project)
     return jsonify(map)
 
+
 @app.route('/projects/<int:project>', methods=['GET'])
 def get_project(project):
     map = dbservices.get_project(project)
     return jsonify(map)
 
+
 @app.route('/projects/<int:project>', methods=['DELETE'])
 def delete_project(project):
     dbservices.delete_project(project)
-    return ('',204)
+    return ('', 204)
+
 
 @app.route('/projects/<int:project>/tickets/<int:ticket>', methods=['GET'])
 def get_ticket(project, ticket):
     map = dbservices.get_ticket(project, ticket)
     return jsonify(map)
+
 
 @app.route('/projects/<int:project>/tickets/<int:ticket>', methods=['PUT'])
 def update_ticket(project, ticket):
@@ -34,12 +37,16 @@ def update_ticket(project, ticket):
         abort(400)
 
     location = dbservices.update_ticket(project, ticket, request.json)
-    return jsonify(location), 201
+    location = urlservices.get_ticket_url(project, location.get('xhref'))
+    location_map = {'location': location}
+    return jsonify(location_map), 201, location_map
+
 
 @app.route('/projects/<int:project>/tickets/<int:ticket>', methods=['DELETE'])
 def delete_ticket(project):
     dbservices.delete_ticket(project)
-    return ('',204)
+    return ('', 204)
+
 
 @app.route('/projects/<int:project>/tickets/', methods=['POST'])
 def post_ticket(project):
@@ -49,7 +56,10 @@ def post_ticket(project):
         abort(400)
 
     location = dbservices.post_ticket(project, request.json)
-    return jsonify(location), 201
+    location = urlservices.get_ticket_url(project, location.get('xhref'))
+    location_map = {'location': location}
+    return jsonify(location_map), 201, location_map
+
 
 @app.route('/projects/', methods=['POST'])
 @authservices.get_user_from_session
@@ -57,8 +67,9 @@ def post_project(username):
     if not request.json or not username:
         abort(400)
     location = dbservices.post_project(request.json, username)
-    #todo (optional) also set location header
-    return jsonify(location), 201
+    location = urlservices.get_project_url(location.get('xhref'))
+    location_map = {'location': location}
+    return jsonify(location_map), 201, location_map
 
 @app.route('/')
 @authservices.authenticate_with_sessionid
@@ -69,8 +80,9 @@ def home_page(username):
         ticket_list = []
         project = dbservices.get_project_for_user(username)
         if project:
-            ticket_list = dbservices.get_all_tickets(project, type = 'list')
-        return render_template('index2.html', tickets=ticket_list, username = username)
+            ticket_list = dbservices.get_all_tickets(project, type='list')
+        return render_template('index2.html', tickets=ticket_list, username=username)
+
 
 @app.route('/api')
 @authservices.authenticate_with_sessionid
@@ -78,8 +90,7 @@ def api_page(username):
     if not username:
         return render_template('signin.html')
     else:
-        return render_template('api.html', username = username)
-
+        return render_template('api.html', username=username)
 
 
 @app.route('/logout')
@@ -87,7 +98,8 @@ def api_page(username):
 def logout(username):
     if username:
         authservices.remove_user_from_session(username)
-    return redirect(__base_url__)
+    return redirect(urlservices.__base_url__)
+
 
 @app.route('/login', methods=['POST'])
 @authservices.authenticate_with_form_fields
