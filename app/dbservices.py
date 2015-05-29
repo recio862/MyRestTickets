@@ -22,14 +22,15 @@ def get_all_tickets(project, type = 'map'):
         headers = cur.description
 
         if type == 'map':
-            return convert_db_table_to_map(rows, headers)
+            result = convert_db_table_to_map(rows, headers)
         elif type == 'list':
-            return convert_db_table_to_list(rows, headers)
+            result = convert_db_table_to_list(rows, headers)
     except:
         raise
     finally:
         if cur:
             cur.close()
+    return result
 
 def get_ticket(project, ticket):
     result = None
