@@ -38,7 +38,7 @@ def get_ticket(project, ticket):
         cur = db.cursor()
         cmd = 'SELECT * FROM tickets WHERE tickets.key=%s AND tickets.p_id=%s'
         cur.execute(cmd, (ticket, str(project)))
-        result = cur.fetchone()[0]
+        result = convert_db_table_to_map(cur.fetchall(), cur.description)
     except:
         raise
     finally:
