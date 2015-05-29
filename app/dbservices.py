@@ -74,6 +74,7 @@ def post_user(request_body):
         #cmd = 'INSERT INTO projects_to_users(p_id, username) VALUES (%s, %s)'
         db.commit()
     except:
+        db.rollback()
         raise
     finally:
         if cur:
@@ -90,6 +91,7 @@ def post_ticket(project, json):
         db.commit()
         result = { 'xhref' : (str(cur.lastrowid)) }
     except:
+        db.rollback()
         raise
     finally:
         if cur:
@@ -110,6 +112,7 @@ def post_project(json, username):
         db.commit()
         cur.close()
     except:
+        db.rollback()
         raise
     finally:
         if cur:
