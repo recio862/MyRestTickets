@@ -21,13 +21,25 @@ def get_project(project):
 @app.route('/projects/<int:project>', methods=['DELETE'])
 def delete_project(project):
     dbservices.delete_project(project)
-    return jsonify({'deleted':project})
+    return ('',204)
 
 @app.route('/projects/<int:project>/tickets/<int:ticket>', methods=['GET'])
 def get_ticket(project, ticket):
     map = dbservices.get_ticket(project, ticket)
     return jsonify(map)
 
+@app.route('/projects/<int:project>/tickets/<int:ticket>', methods=['PUT'])
+def update_ticket(project, ticket):
+    if not request.json:
+        abort(400)
+
+    location = dbservices.update_ticket(project, ticket, request.json)
+    return jsonify(location), 201
+
+@app.route('/projects/<int:project>/tickets/<int:ticket>', methods=['DELETE'])
+def delete_ticket(project):
+    dbservices.delete_ticket(project)
+    return ('',204)
 
 @app.route('/projects/<int:project>/tickets/', methods=['POST'])
 def post_ticket(project):
@@ -37,7 +49,7 @@ def post_ticket(project):
         abort(400)
 
     location = dbservices.post_ticket(project, request.json)
-    return jsonify(location)
+    return jsonify(location), 201
 
 @app.route('/projects/', methods=['POST'])
 @authservices.get_user_from_session
@@ -46,7 +58,7 @@ def post_project(username):
         abort(400)
     location = dbservices.post_project(request.json, username)
     #todo (optional) also set location header
-    return jsonify(location)
+    return jsonify(location), 201
 
 @app.route('/')
 @authservices.authenticate_with_sessionid

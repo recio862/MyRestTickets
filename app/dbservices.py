@@ -99,6 +99,23 @@ def post_ticket(project, json):
             cur.close()
     return result
 
+def update_ticket(project, ticket, json):
+    result = None
+    if not json.get('ticket_name') and not json.get('ticket_description'):
+        return result
+    try:
+        cur = db.cursor()
+        cmd = 'UPDATE tickets SET tickets.ticket_name = %s, tickets.ticket_description=%s WHERE tickets.t_id=%s AND tickets.p_id = %s)'
+        cur.execute(cmd, (json.get('ticket_name'), json.get('ticket_description'), ticket , project))
+        db.commit()
+        result = { 'xhref' : (str(cur.lastrowid)) }
+    except:
+        db.rollback()
+        raise
+    finally:
+        if cur:
+            cur.close()
+    return result
 
 def post_project(json, username):
     result = None
@@ -144,8 +161,26 @@ def delete_project(project):
         cur.execute(cmd, project)
         cmd = 'DELETE FROM projects_to_users WHERE p_id=%s'
         cur.execute(cmd, project)
+        db.commit()
         result = True
     except:
+        db.rollback()
+        raise
+    finally:
+        if cur:
+            cur.close()
+    return result
+
+def delete_ticket(project, ticket):
+    result = False
+    try:
+        cur = db.cursor()
+        cmd = 'DELETE FROM tickets WHERE p_id=%s AND t_id=%s'
+        cur.execute(cmd, (project, ticket))
+        db.commit()
+        result = True
+    except:
+        db.rollback()
         raise
     finally:
         if cur:
