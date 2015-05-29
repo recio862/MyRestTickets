@@ -13,6 +13,15 @@ def get_all_tickets(project):
     map = dbservices.get_all_tickets(project)
     return jsonify(map)
 
+@app.route('/projects/<int:project>', methods=['GET'])
+def get_project(project):
+    map = dbservices.get_project(project)
+    return jsonify(map)
+
+@app.route('/projects/<int:project>', methods=['DELETE'])
+def delete_project(project):
+    dbservices.delete_project(project)
+    return jsonify({'deleted':project})
 
 @app.route('/projects/<int:project>/tickets/<int:ticket>', methods=['GET'])
 def get_ticket(project, ticket):

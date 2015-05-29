@@ -120,7 +120,37 @@ def post_project(json, username):
             cur.close()
     return result
 
+def get_project(project):
+    result = None
+    try:
+        cur = db.cursor()
+        cmd = 'SELECT (t_id, tickets.p_id, ticket_name, ticket_description, projects.project_name, ' \
+              'projects.project_description) FROM tickets INNER JOIN projects ON tickets.p_id = projects.p_id' \
+              'WHERE projects.p_id = %s'
+        cur.execute(cmd, project)
+        result = convert_db_table_to_list(cur.fetchall(), cur.description)
+    except:
+        raise
+    finally:
+        if cur:
+            cur.close()
+    return result
 
+def delete_project(project):
+    result = False
+    try:
+        cur = db.cursor()
+        cmd = 'DELETE FROM projects WHERE p_id=%s'
+        cur.execute(cmd, project)
+        cmd = 'DELETE FROM projects_to_users WHERE p_id=%s'
+        cur.execute(cmd, project)
+        result = True
+    except:
+        raise
+    finally:
+        if cur:
+            cur.close()
+    return result
 
 def convert_db_table_to_map(rows, column_metadata):
     map = {}
