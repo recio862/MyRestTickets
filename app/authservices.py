@@ -140,6 +140,8 @@ def validate_new_user(fn):
 def get_user_from_session(fn):
     @wraps(fn)
     def retrieve(*args, **kwargs):
+
+
         sessionid = session['restticketssid']
         username = None
         try:
@@ -155,7 +157,16 @@ def get_user_from_session(fn):
         finally:
             if cur:
                 cur.close()
-        f = fn(username)
+        if (kwargs):
+            if (kwargs.get('project')):
+                if (kwargs.get('ticket')):
+                    f = fn(username, kwargs['project'], kwargs['ticket'])
+                else:
+                    f = fn(username, kwargs['project'])
+            else:
+                f = fn(username)
+        else:
+            f = fn(username)
         return f
     return retrieve
 

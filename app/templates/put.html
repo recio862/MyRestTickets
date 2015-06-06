@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>RestTickets</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/static/css/index.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://127.0.0.1:5000/">@RestTickets</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="http://127.0.0.1:5000/api">api</a>
+                </li>
+                <li>
+                    <a href="#">about</a>
+                </li>
+                <li>
+                    <a href="#">contact</a>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://127.0.0.1:5000/logout">logout </a>
+                </li>
+                <li>
+                    <a class="hello">@{{ username }}</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <!-- /.navbar-collapse -->
+    </div>
+
+    <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 sidebar">
+            <ul class="nav nav-pills nav-stacked">
+                <li id="test0" class="myactive"><a href = "/" class="yo">overview</a></li>
+                <li id="test1"><a href="get" class="yo">@get tools</a></li>
+
+                <li id="test2"><a href="post">@post tools</a></li>
+                <li id="test3"><a href="put">@put tools</a></li>
+                <li id="test4"><a href="delete">@delete tools</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-7 col-md-offset-2 main">
+            <h1 class="page-header">@put tools</h1>
+
+            <div>
+                <h3>@put project</h3><p>To put (or create / update) a project to your account, first fill out the JSON fields for the request body. Then, click the "put" button
+                to initiate the request.</p><pre class = "col-md-9">
+<code>Content-Type: application/json
+Authorization: Basic ***************</code></pre>
+                <div class="input-group col-md-9"><span class="input-group-addon " id="basic-addon2">put http://127.0.0.1/projects/</span>
+  <input type="text" id = "pid" class="form-control" placeholder="Project ID" aria-describedby="basic-addon2"></div><p></p>
+
+
+                <div class="input-group col-md-9"><span class="input-group-addon " id="basic-addon2">{"project_name" : "</span>
+  <input type="text" id = "name1" class="form-control" placeholder="Updated Name" aria-describedby="basic-addon2">
+                    <span class="input-group-addon " id="basic-addon2">",</span>
+</div>
+                <div class="input-group col-md-9"><span class="input-group-addon " id="basic-addon2">&nbsp;"project_description" : "</span>
+  <input type="text" id = "description1" class="form-control" placeholder="Updated Description" aria-describedby="basic-addon2">
+                    <span class="input-group-addon " id="basic-addon2">",</span>
+</div>
+                <div class="input-group col-md-9"><span class="input-group-addon " id="basic-addon2">&nbsp;"project_category" : "</span>
+  <input type="text" id = "category1" class="form-control" placeholder="Updated Category" aria-describedby="basic-addon2">
+                    <span class="input-group-addon " id="basic-addon2">"}</span>
+</div>
+                <p><br><button id = "putproject" type="button" class="btn btn-primary col-md-9">  put</button><br></p><p><br></p>
+                <div id = "response"><p></p></div>
+                <p><br><br><br></p>
+                <hr>
+                    <h3>@put ticket</h3><p>To put (or create / update) a ticket to a specific project, specify your project id, and then first fill out JSON fields for the request body. Then, click the "put" button
+                to initiate the request.</p><pre class = "col-md-9">
+<code>Content-Type: application/json
+Authorization: Basic ***************
+</code></pre><div class="input-group col-md-9"><span class="input-group-addon " id="basic-addon2">put http://127.0.0.1/projects/</span>
+  <input type="text" id = "pid2" class="form-control" placeholder="Project ID" aria-describedby="basic-addon2">
+  <span class="input-group-addon" id="basic-addon2">/tickets/</span>
+                <input id = "tid" type="text" class="form-control" placeholder="Ticket ID" aria-describedby="basic-addon2">
+</div>
+
+<p></p>
+                <div class="input-group col-md-9"><span class="input-group-addon " id="basic-addon2">{"ticket_name" : "</span>
+  <input type="text" id = "tname" class="form-control" placeholder="Updated Name" aria-describedby="basic-addon2">
+                    <span class="input-group-addon " id="basic-addon2">",</span>
+</div>
+                <div class="input-group col-md-9"><span class="input-group-addon " id="basic-addon2">&nbsp;"ticket_description" : "</span>
+  <input type="text" id = "tdescription" class="form-control" placeholder="Updated Description" aria-describedby="basic-addon2">
+                    <span class="input-group-addon " id="basic-addon2">"}</span>
+</div>
+
+                <p><br><button type="button" id = "putticket" class="btn btn-primary col-md-9">  put</button><br></p><p><br></p>
+
+                <div id = "response2"><p></p></div>
+</div>
+
+                <p><br><br><br></p>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- /.container -->
+
+<!-- jQuery -->
+<script src="/static/js/jquery-1.11.3.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.dropdown-toggle').dropdown()
+    });
+</script>
+<script>
+    $("#putproject").click(function () {
+
+        var url = "http://127.0.0.1:5000/projects/" + $("#pid").val() + "/"; // the script where you handle the form input.
+
+
+        var jsondata = "{\"project_name\" : \"" + $("#name1").val() + "\", " +
+            "\"project_description\" : \"" + $("#description1").val() + "\", " +
+            "\"project_category\" : \"" + $("#category1").val() + "\"}";
+        console.log(jsondata);
+        $.ajax({
+            type: "PUT",
+            url: url, // serializes the form's elements.
+            contentType:"application/json; charset=utf-8",
+            dataType:"json",
+            data: jsondata,
+            success: function (data) {
+                $("#response").empty();
+                var numElements = 0;
+                for (var key in data) {
+                    numElements++;
+                }
+                if (numElements > 0) {
+                    $("#response").append("<br><br>")
+                    for (var key in data) {
+                        $("#response").append("{<br>");
+                            $("#response").append("\"xhref\" : " + JSON.stringify(data[key], null, '\t'));
+                            $("#response").append("<br>");
+                        }
+                        $("#response").append("}<br><br><br>");
+
+                }
+                else {
+                    $("#response").empty();
+                    $("#response").append("<code>You currently have no projects! Visit the post tools page to create your first project.</code><br><br><br>")
+                }
+            },
+            error: function(){
+
+            }
+
+
+        });
+
+        return false; // avoid to execute the actual submit of the form.
+    });
+</script>
+<script>
+    $("#putticket").click(function () {
+
+        var url = "http://127.0.0.1:5000/projects/" + $("#pid2").val() + "/tickets/" + $("#tid").val(); // the script where you handle the form input.
+
+
+        var jsondata = "{\"ticket_name\" : \"" + $("#tname").val() + "\", " +
+            "\"ticket_description\" : \"" + $("#tdescription").val() + "\"}";
+        console.log(jsondata);
+        $.ajax({
+            type: "PUT",
+            url: url, // serializes the form's elements.
+            contentType:"application/json; charset=utf-8",
+            dataType:"json",
+            data: jsondata,
+            success: function (data) {
+                $("#response2").empty();
+                var numElements = 0;
+                for (var key in data) {
+                    numElements++;
+                }
+                if (numElements > 0) {
+                    $("#response2").append("<br><br>")
+                    for (var key in data) {
+                        $("#response2").append("{<br>");
+                            $("#response2").append("\"xhref\" : " + JSON.stringify(data[key], null, '\t'));
+                            $("#response2").append("<br>");
+                        }
+                        $("#response2").append("}<br><br><br>");
+
+                }
+                else {
+                    $("#response2").empty();
+                    $("#response2").append("<code>You currently have no projects! Visit the post tools page to create your first project.</code><br><br><br>")
+                }
+            },
+            error: function(){
+
+            }
+
+
+        });
+
+        return false; // avoid to execute the actual submit of the form.
+    });
+</script>
+</body>
+
+</html>

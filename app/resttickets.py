@@ -13,6 +13,14 @@ def get_all_tickets(project):
     return jsonify(tckts_dict)
 
 
+@app.route('/projects/', methods=['GET'])
+@authservices.get_user_from_session
+def get_all_projects(username):
+    if not username:
+        abort(400)
+    prjct_dict = dbservices.get_all_projects(username)
+    return jsonify(prjct_dict)
+
 @app.route('/projects/<int:project>', methods=['GET'])
 def get_project(project):
     prjct_dict = dbservices.get_project(project)
@@ -20,10 +28,23 @@ def get_project(project):
 
 
 @app.route('/projects/<int:project>', methods=['DELETE'])
-def delete_project(project):
-    dbservices.delete_project(project)
+@authservices.get_user_from_session
+def delete_project(username, project):
+    dbservices.delete_project(username, project)
     return ('', 204)
 
+
+@app.route('/projects/', methods=['DELETE'])
+@authservices.get_user_from_session
+def delete_projects(username):
+    dbservices.delete_projects(username)
+    return ('', 204)
+
+@app.route('/projects/<int:project>/tickets/', methods=['DELETE'])
+@authservices.get_user_from_session
+def delete_tickets(username, project):
+    dbservices.delete_projects(username, project)
+    return ('', 204)
 
 @app.route('/projects/<int:project>/tickets/<int:ticket>', methods=['GET'])
 def get_ticket(project, ticket):
@@ -31,20 +52,12 @@ def get_ticket(project, ticket):
     return jsonify(tckt_map)
 
 
-@app.route('/projects/<int:project>/tickets/<int:ticket>', methods=['PUT'])
-def update_ticket(project, ticket):
-    if not request.json:
-        abort(400)
-
-    location = dbservices.update_ticket(project, ticket, request.json)
-    location = urlservices.get_ticket_url(project, location.get('xhref'))
-    location_dict = {'location': location}
-    return jsonify(location_dict), 201, location_dict
 
 
 @app.route('/projects/<int:project>/tickets/<int:ticket>', methods=['DELETE'])
-def delete_ticket(project):
-    dbservices.delete_ticket(project)
+@authservices.get_user_from_session
+def delete_ticket(username, project, ticket):
+    dbservices.delete_ticket(username, project, ticket)
     return ('', 204)
 
 
@@ -61,6 +74,16 @@ def post_ticket(project):
     return jsonify(location_map), 201, location_map
 
 
+# @app.route('/projects/', methods=['GET'])
+# @authservices.get_user_from_session
+# def get_project(username):
+#     if not request.json or not username:
+#         abort(400)
+#     location = dbservices.post_project(request.json, username)
+#     location = urlservices.get_project_url(location.get('xhref'))
+#     location_dict = {'location': location}
+#     return jsonify(location_dict), 201, location_dict
+
 @app.route('/projects/', methods=['POST'])
 @authservices.get_user_from_session
 def post_project(username):
@@ -70,6 +93,27 @@ def post_project(username):
     location = urlservices.get_project_url(location.get('xhref'))
     location_dict = {'location': location}
     return jsonify(location_dict), 201, location_dict
+
+@app.route('/projects/<int:project>/', methods=['PUT'])
+@authservices.get_user_from_session
+def put_project(username, project):
+    if not request.json or not username:
+        abort(400)
+    location = dbservices.put_project(request.json, username, project)
+    location = urlservices.get_project_url(project)
+    location_dict = {'location': location}
+    return jsonify(location_dict), 201, location_dict
+
+@app.route('/projects/<int:project>/tickets/<int:ticket>', methods=['PUT'])
+@authservices.get_user_from_session
+def put_ticket(username, project, ticket):
+    if not request.json or not username:
+        abort(400)
+    location = dbservices.put_ticket(request.json, username, project, ticket)
+    location = urlservices.get_ticket_url(project, ticket)
+    location_dict = {'location': location}
+    return jsonify(location_dict), 201, location_dict
+
 
 @app.route('/')
 @authservices.authenticate_with_sessionid
@@ -82,6 +126,38 @@ def home_page(username):
         if project:
             ticket_list = dbservices.get_all_tickets(project, type='list')
         return render_template('index2.html', tickets=ticket_list, username=username)
+
+@app.route('/get')
+@authservices.authenticate_with_sessionid
+def get_page(username):
+    if not username:
+        return render_template('signin.html')
+    else:
+        return render_template('get.html')
+
+@app.route('/post')
+@authservices.authenticate_with_sessionid
+def post_page(username):
+    if not username:
+        return render_template('signin.html')
+    else:
+        return render_template('post.html')
+
+@app.route('/put')
+@authservices.authenticate_with_sessionid
+def put_page(username):
+    if not username:
+        return render_template('signin.html')
+    else:
+        return render_template('put.html')
+
+@app.route('/delete')
+@authservices.authenticate_with_sessionid
+def delete_page(username):
+    if not username:
+        return render_template('signin.html')
+    else:
+        return render_template('delete.html')
 
 
 @app.route('/api')

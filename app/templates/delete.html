@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>RestTickets</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/static/css/index.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://127.0.0.1:5000/">@RestTickets</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="http://127.0.0.1:5000/api">api</a>
+                </li>
+                <li>
+                    <a href="#">about</a>
+                </li>
+                <li>
+                    <a href="#">contact</a>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://127.0.0.1:5000/logout">logout </a>
+                </li>
+                <li>
+                    <a class="hello">@{{ username }}</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <!-- /.navbar-collapse -->
+    </div>
+
+    <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 sidebar">
+            <ul class="nav nav-pills nav-stacked">
+                <li id="test0" class="myactive"><a href = "/" class="yo">overview</a></li>
+                <li id="test1"><a href="get" class="yo">@get tools</a></li>
+
+                <li id="test2"><a href="post">@post tools</a></li>
+                <li id="test3"><a href="put">@put tools</a></li>
+                <li id="test4"><a href="delete">@delete tools</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-7 col-md-offset-2 main">
+            <h1 class="page-header">@delete tools</h1>
+
+            <div>
+                <h3>@delete projects</h3><p>To delete all of the projects associated with your account, click the "delete" request button
+                to initiate the request. You can only delete projects that you created through your account.<br><code>Warning: this operation is irreversible!</code></p><pre class = "col-md-9"><code>Authorization: Basic ***************
+delete http://127.0.0.1:5000/projects/</code></pre>
+                <p><button type="button" class="btn btn-primary col-md-9">  delete<br></button><br></p>
+                <p><br><br><br></p>
+                <p><br><br><br></p>
+                <hr>
+                    <h3>@delete tickets</h3><p>To delete all of the tickets associated with an individual project, click the "delete" request button after specifying the project you are requesting for.
+                You can only delete tickets that you created through your account.<br><code>Warning: this operation is irreversible!</code></p>
+<pre class = "col-md-9"><code>Authorization: Basic ***************</code></pre>
+<div class="input-group col-md-9"><span class="input-group-addon " id="basic-addon2">delete http://127.0.0.1:5000/projects/</span>
+  <input type="text" class="form-control" placeholder="Project ID" aria-describedby="basic-addon2">
+  <span class="input-group-addon" id="basic-addon2">/tickets</span>
+</div><p></p><p><button type="button" class="btn btn-primary col-md-9">  delete<br></button><br></p>
+                <p><br><br><br></p>
+                <hr>
+                <h3>@delete project</h3><p>To delete a single project, fill in the project id and then click the "delete" request button.
+                You can only delete a project that you created through your account.<br><code>Warning: this operation is irreversible!</code></p>
+<pre class = "col-md-9"><code>Authorization: Basic ***************</code></pre>
+<div class="input-group col-md-9"><span class="input-group-addon " id="basic-addon2">delete http://127.0.0.1:5000/projects/</span>
+  <input type="text" class="form-control" placeholder="Project ID" aria-describedby="basic-addon2">
+
+</div><p></p><p><button type="button" class="btn btn-primary col-md-9">  delete<br></button><br></p>
+                <p><br><br><br></p>
+                <hr>
+                <h3>@delete ticket</h3><p>To delete a single ticket, fill in the project id and ticket id and then click the "delete" request button.
+                You can only delete a ticket that you created through your account.<br><code>Warning: this operation is irreversible!</code></p>
+<pre class = "col-md-9"><code>Authorization: Basic ***************</code></pre>
+<div class="input-group col-md-9"><span class="input-group-addon " id="basic-addon2">delete http://127.0.0.1:5000/projects/</span>
+  <input type="text" class="form-control" placeholder="Project ID" aria-describedby="basic-addon2">
+
+</div><p></p><p><button type="button" class="btn btn-primary col-md-9">  delete<br></button><br></p>
+                <p><br><br><br></p>
+                <p><br><br><br></p>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- /.container -->
+
+<!-- jQuery -->
+<script src="/static/js/jquery-1.11.3.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.dropdown-toggle').dropdown()
+    });
+</script>
+<script>
+    $("#deleteprojects").click(function () {
+
+        var url = "http://127.0.0.1:5000/projects/";
+        console.log(jsondata);
+        $.ajax({
+            type: "DELETE",
+            url: url, // serializes the form's elements.
+            contentType:"application/json; charset=utf-8",
+            dataType:"json",
+            data: jsondata,
+            success: function (data) {
+                $("#response").empty();
+                var numElements = 0;
+                for (var key in data) {
+                    numElements++;
+                }
+                if (numElements > 0) {
+                    $("#response").append("<br><br>")
+                    for (var key in data) {
+                        $("#response").append("{<br>");
+                            $("#response").append("\"xhref\" : " + JSON.stringify(data[key], null, '\t'));
+                            $("#response").append("<br>");
+                        }
+                        $("#response").append("}<br><br><br>");
+
+                }
+                else {
+                    $("#response").empty();
+                    $("#response").append("<code>You currently have no projects! Visit the post tools page to create your first project.</code><br><br><br>")
+                }
+            },
+            error: function(){
+
+            }
+
+
+        });
+
+        return false; // avoid to execute the actual submit of the form.
+    });
+</script>
+<script>
+    $("#postproject").click(function () {
+
+        var url = "http://127.0.0.1:5000/projects/"; // the script where you handle the form input.
+        var jsondata = "{\"project_name\" : \"" + $("#pname").val() + "\", " +
+            "\"project_description\" : \"" + $("#pdescription").val() + "\", " +
+            "\"project_category\" : \"" + $("#pcategory").val() + "\"}";
+        console.log(jsondata);
+        $.ajax({
+            type: "POST",
+            url: url, // serializes the form's elements.
+            contentType:"application/json; charset=utf-8",
+            dataType:"json",
+            data: jsondata,
+            success: function (data) {
+                $("#response").empty();
+                var numElements = 0;
+                for (var key in data) {
+                    numElements++;
+                }
+                if (numElements > 0) {
+                    $("#response").append("<br><br>")
+                    for (var key in data) {
+                        $("#response").append("{<br>");
+                            $("#response").append("\"xhref\" : " + JSON.stringify(data[key], null, '\t'));
+                            $("#response").append("<br>");
+                        }
+                        $("#response").append("}<br><br><br>");
+
+                }
+                else {
+                    $("#response").empty();
+                    $("#response").append("<code>You currently have no projects! Visit the post tools page to create your first project.</code><br><br><br>")
+                }
+            },
+            error: function(){
+
+            }
+
+
+        });
+
+        return false; // avoid to execute the actual submit of the form.
+    });
+</script>
+<script>
+    $("#postproject").click(function () {
+
+        var url = "http://127.0.0.1:5000/projects/"; // the script where you handle the form input.
+        var jsondata = "{\"project_name\" : \"" + $("#pname").val() + "\", " +
+            "\"project_description\" : \"" + $("#pdescription").val() + "\", " +
+            "\"project_category\" : \"" + $("#pcategory").val() + "\"}";
+        console.log(jsondata);
+        $.ajax({
+            type: "POST",
+            url: url, // serializes the form's elements.
+            contentType:"application/json; charset=utf-8",
+            dataType:"json",
+            data: jsondata,
+            success: function (data) {
+                $("#response").empty();
+                var numElements = 0;
+                for (var key in data) {
+                    numElements++;
+                }
+                if (numElements > 0) {
+                    $("#response").append("<br><br>")
+                    for (var key in data) {
+                        $("#response").append("{<br>");
+                            $("#response").append("\"xhref\" : " + JSON.stringify(data[key], null, '\t'));
+                            $("#response").append("<br>");
+                        }
+                        $("#response").append("}<br><br><br>");
+
+                }
+                else {
+                    $("#response").empty();
+                    $("#response").append("<code>You currently have no projects! Visit the post tools page to create your first project.</code><br><br><br>")
+                }
+            },
+            error: function(){
+
+            }
+
+
+        });
+
+        return false; // avoid to execute the actual submit of the form.
+    });
+</script>
+<script>
+    $("#postproject").click(function () {
+
+        var url = "http://127.0.0.1:5000/projects/"; // the script where you handle the form input.
+        var jsondata = "{\"project_name\" : \"" + $("#pname").val() + "\", " +
+            "\"project_description\" : \"" + $("#pdescription").val() + "\", " +
+            "\"project_category\" : \"" + $("#pcategory").val() + "\"}";
+        console.log(jsondata);
+        $.ajax({
+            type: "POST",
+            url: url, // serializes the form's elements.
+            contentType:"application/json; charset=utf-8",
+            dataType:"json",
+            data: jsondata,
+            success: function (data) {
+                $("#response").empty();
+                var numElements = 0;
+                for (var key in data) {
+                    numElements++;
+                }
+                if (numElements > 0) {
+                    $("#response").append("<br><br>")
+                    for (var key in data) {
+                        $("#response").append("{<br>");
+                            $("#response").append("\"xhref\" : " + JSON.stringify(data[key], null, '\t'));
+                            $("#response").append("<br>");
+                        }
+                        $("#response").append("}<br><br><br>");
+
+                }
+                else {
+                    $("#response").empty();
+                    $("#response").append("<code>You currently have no projects! Visit the post tools page to create your first project.</code><br><br><br>")
+                }
+            },
+            error: function(){
+
+            }
+
+
+        });
+
+        return false; // avoid to execute the actual submit of the form.
+    });
+</script>
+</body>
+
+</html>

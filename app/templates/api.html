@@ -78,19 +78,9 @@
 <br><br><br><br><br>
 
 
-
 <div class="container-fluid main-container">
-    <div class="col-md-2 sidebar">
-        <ul class="nav nav-pills nav-stacked">
-            <li id="test0" class="myactive"><a class="yo">api</a></li>
-            <li id="test1"><a href="#@get"class="yo">@get</a></li>
-            </li>
-            <li id="test2"><a class="yo">@post</a></li>
-            <li id="test3"><a class="yo">@put</a></li>
-            <li id="test4"><a class="yo">@delete</a></li>
-        </ul>
-    </div>
-    <div class="col-md-10 content">
+
+    <div class="col-md-15 content">
         <div class="panel panel-default">
 
             <div id=5 class="panel-body">
@@ -101,7 +91,9 @@
                     content in a stateless, uniform interface. This website is designed to help beginners understand how a simple REST service works. If you are totally unfamiliar with RESTful design, check out the
                         <a href="http://en.wikipedia.org/wiki/Representational_state_transfer">wikipedia </a>page.</p>-->
 
-                    <p>@RestTickets are simple, customizable tables that store various types of information. This website was created to provide a REST API for managing these individual tickets using the HTTP protocol. This website
+                    <p>@RestTickets are simple, customizable tables that store various types of information. This
+                        website was created to provide a REST API for managing these individual tickets using the HTTP
+                        protocol. This website
                         also gives some tools that help both visualize and conceptualize the provided REST services.</p>
 
                     <hr>
@@ -109,242 +101,526 @@
                     <h2 class="blog-post-title">API</h2>
 
 
-                    <p>This API will only accept requests if they are from a valid user. You can either make the requests using the tools provided by the site, or you can use your own client to make the requests.
-                        If you make the HTTP requests from your own client, be sure to include your authorization header.</p>
+                    <p>This API will only accept requests if they are from a valid user. You can either make the
+                        requests using the tools provided by the site, or you can use your own client to make the
+                        requests.
+                        If you make the HTTP requests from your own client, be sure to include your authorization
+                        header.</p>
 
 
+                    <h4>What do I put in the authorization header?</h4>
 
-                        <h4>What do I put in the authorization header?</h4>
+                    <p>The authorization header takes a Base64 encoded combination of your username and password (the
+                        same ones you used to register). The combination is of the format "username:password", with a
+                        colon in between.
+                        An example authorization header looks like this:
+                    <pre><code>Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</code></pre>
+                    This is necessary in order to authenticate the requests and prohibit restricted users from
+                    interacting with the services.</p>
+                    <h4>What about the content-type?</h4>
 
-                        <p>The authorization header takes a Base64 encoded combination of your username and password (the same ones you used to register). The combination is of the format "username:password", with a colon in between.
-                        An example authorization header looks like this: <pre><code>Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</code></pre>
-                       This is necessary in order to authenticate the requests and prohibit restricted users from interacting with the services.
-                       <h4>What about the content-type?</h4>
-                    <p>This service requires that information sent from your client's request body must be in json format. An example of the json header looks like this:
-                     <pre><code>Content-Type: application/json</code></pre>More details outlining the actual json format of the body will be described in the following sections.</p>
+                    <p>This service requires that information sent from your client's request body must be in json
+                        format. An example of the json header looks like this:
+                    <pre><code>Content-Type: application/json</code></pre>
+                    More details outlining the actual json format of the body will be described in the following
+                    sections.</p>
+                    <h4>How are the resources structured?</h4>
+
+                    <p>Each User has the ability to manage both Projects and Tickets.
+                        Furthermore, a User can also add other users to their own project(s), but Users can never add
+                        themselves to another User's project(s). So if we were to
+                        create a simple model for our application structure, it would be in a linear fashion:
+                    <pre><code>Users --> Projects --> Tickets</code></pre>
+                    Users contain projects, and projects contain tickets.</p>
+                    <h4>What are all the URL endpoints?</h4>
+
+                    <p>Keep reading below. All of the REST operations can be found here on this page.</p>
+
+                    <h4>How can I get started?</h4>
+
+                    <p>You can either start using your own client to make API requests, or you can use the tools
+                        provided on this website if you
+                        prefer to use a GUI.</p>
 
                     <hr>
 
-                    <h2 id = "@get">@get</h2>
+
+                    <h2 id="@get">@get</h2>
+
                     <div class="method">
                         <div class="row margin-0 list-header hidden-sm hidden-xs">
-                            <div class="col-md-3">
-                                <div class="header">Property</div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="header">Type</div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="header">Required</div>
+                            <div class="col-md-5">
+                                <div class="header"><b>URL</b></div>
                             </div>
                             <div class="col-md-5">
-                                <div class="header">Description</div>
+                                <div class="header"><b>Description</b></div>
                             </div>
+
                         </div>
 
                         <div class="row margin-0">
-                            <div class="col-md-3">
+                            <div class="col-md-5">
                                 <div class="cell">
                                     <div class="propertyname">
-                                        CurrencyCode <span class="mobile-isrequired">[Required]</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="cell">
-                                    <div class="type">
-                                        <code>String</code>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="cell">
-                                    <div class="isrequired">
-                                        Yes
+                                        <pre><code>/projects/</code></pre>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-5">
                                 <div class="cell">
-                                    <div class="description">
-                                        The standard ISO 4217 3-letter currency code
+                                    <div class="propertyname">
+                                        <p>Get all of the projects associated with your user account (see above about
+                                            auth headers).</p>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
+
                         <div class="row margin-0">
-                            <div class="col-md-3">
+                            <div class="col-md-5">
                                 <div class="cell">
                                     <div class="propertyname">
-                                        PriceType <span class="mobile-isrequired">[Required]</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="cell">
-                                    <div class="type">
-                                        <code>Int32</code>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="cell">
-                                    <div class="isrequired">
-                                        Yes
+                                        <pre><code>/projects/{project_id}</code></pre>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-5">
                                 <div class="cell">
-                                    <div class="description">
-                                        The type of price
+                                    <div class="propertyname">
+                                        <p>Get details of a single project using the project's p_id (project id).</p>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
+
                         <div class="row margin-0">
-                            <div class="col-md-3">
+                            <div class="col-md-5">
                                 <div class="cell">
                                     <div class="propertyname">
-                                        WarehouseID <span class="mobile-isrequired">[Required]</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="cell">
-                                    <div class="type">
-                                        <code>Int32</code>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="cell">
-                                    <div class="isrequired">
-                                        Yes
+                                        <pre><code>/projects/{project_id}/tickets</code></pre>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-5">
                                 <div class="cell">
-                                    <div class="description">
-                                        The unique identifier for the warehouse
+                                    <div class="propertyname">
+                                        <p>Get all of the tickets associated with a specific project.</p>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
+
+
                         <div class="row margin-0">
-                            <div class="col-md-3">
+                            <div class="col-md-5">
                                 <div class="cell">
                                     <div class="propertyname">
-                                        ItemCodes
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="cell">
-                                    <div class="type">
-                                        <code>String[]</code>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="cell">
-                                    <div class="isrequired">
-                                        <span class="text-muted">No</span>
+                                        <pre><code>/projects/{project_id}/tickets/{ticket_id}</code></pre>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-5">
                                 <div class="cell">
-                                    <div class="description">
+                                    <div class="propertyname">
+                                        <p>Get details of a single ticket associated with a specific project.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row margin-0">
+                            <div class="col-md-5">
+                                <div class="cell">
+                                    <div class="propertyname">
+                                        <pre><code>/projects/{project_id}/users/</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="cell">
+                                    <div class="propertyname">
+                                        <p>Get the usernames of every user associated with a specific project.</p></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <hr>
+
+
+                        <h2 id="@post">@post</h2>
+
+                        <div class="method">
+                            <div class="row margin-0 list-header hidden-sm hidden-xs">
+                                <div class="col-md-4">
+                                    <div class="header"><b>URL</b></div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="header"><b>Request Body</b></div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="header"><b>Description</b></div>
+                                </div>
+
+                            </div>
+
+                            <div class="row margin-0">
+                                <div class="col-md-4">
+                                    <div class="cell">
+                                        <div class="propertyname">
+                                            <pre><code>/projects/</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="cell">
+                                        <div class="propertyname">
+                                      <pre><code>{"project_name" : "name",
+"project_description" : "description",
+"project_category" : "category"}</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="cell">
+                                        <div class="propertyname">
+                                            <p>Post a single project.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="row margin-0">
+                                <div class="col-md-4">
+                                    <div class="cell">
+                                        <div class="propertyname">
+                                            <pre><code>/projects/{project_id}/tickets</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="cell">
+                                        <div class="propertyname">
+                                      <pre><code>{"ticket_name" : "name",
+"ticket_description" : "description"}</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="cell">
+                                        <div class="propertyname">
+                                            <p>Post a single ticket for a specific project.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="row margin-0">
+                                <div class="col-md-4">
+                                    <div class="cell">
+                                        <div class="propertyname">
+                                            <pre><code>/projects/{project_id}/users</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="cell">
+                                        <div class="propertyname">
+                                      <pre><code>{"username" : "user"}</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="cell">
+                                        <div class="propertyname">
+                                            <p>Post a single user to a specific project.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <hr>
+
+
+                            <h2 id="@put">@put</h2>
+
+                            <div class="method">
+                                <div class="row margin-0 list-header hidden-sm hidden-xs">
+                                    <div class="col-md-4">
+                                        <div class="header"><b>URL</b></div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="header"><b>Request Body</b></div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="header"><b>Description</b></div>
+                                    </div>
+
+                                </div>
+                                <div class="row margin-0">
+                                    <div class="col-md-4">
+                                        <div class="cell">
+                                            <div class="propertyname">
+                                                <pre><code>/projects/{project_id}</code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="cell">
+                                            <div class="propertyname">
+                                      <pre><code>{"project_name" : "updated name",
+"project_description" : "updated description",
+"project_category" : "updated category"}</code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="cell">
+                                            <div class="propertyname">
+                                                <p>Update a single project's fields by specifying the fields you want to
+                                                    update.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row margin-0">
+                                    <div class="col-md-4">
+                                        <div class="cell">
+                                            <div class="propertyname">
+                                                <pre><code>/projects/{project_id}/tickets/{ticket_id}</code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="cell">
+                                            <div class="propertyname">
+                                      <pre><code>{"ticket_name" : "name",
+"ticket_description" : "description"}</code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="cell">
+                                            <div class="propertyname">
+                                                <p>Update a single ticket's fields by specifying the fields you want to
+                                                    update.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <hr>
+
+
+                                <h2 id="@delete">@delete</h2>
+                                <code>Warning: these operations are irreversible!<br></code>
+
+                                <p></p>
+
+                                <div class="method">
+                                    <div class="row margin-0 list-header hidden-sm hidden-xs">
+                                        <div class="col-md-5">
+                                            <div class="header"><b>URL</b></div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="header"><b>Description</b></div>
+                                        </div>
 
                                     </div>
+
+                                    <div class="row margin-0">
+                                        <div class="col-md-5">
+                                            <div class="cell">
+                                                <div class="propertyname">
+                                                    <pre><code>/projects/</code></pre>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="cell">
+                                                <div class="propertyname">
+                                                    <p>Delete all of the projects associated with your user account.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row margin-0">
+                                        <div class="col-md-5">
+                                            <div class="cell">
+                                                <div class="propertyname">
+                                                    <pre><code>/projects/{project_id}</code></pre>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="cell">
+                                                <div class="propertyname">
+                                                    <p>Delete a single project using the project's p_id (project
+                                                        id).</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row margin-0">
+                                        <div class="col-md-5">
+                                            <div class="cell">
+                                                <div class="propertyname">
+                                                    <pre><code>/projects/{project_id}/tickets</code></pre>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="cell">
+                                                <div class="propertyname">
+                                                    <p>Delete all of the tickets associated with a specific
+                                                        project. </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="row margin-0">
+                                        <div class="col-md-5">
+                                            <div class="cell">
+                                                <div class="propertyname">
+                                                    <pre><code>/projects/{project_id}/tickets/{ticket_id}</code></pre>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="cell">
+                                                <div class="propertyname">
+                                                    <p>Delete a single ticket associated with a specific project.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row margin-0">
+                                        <div class="col-md-5">
+                                            <div class="cell">
+                                                <div class="propertyname">
+                                                    <pre><code>/projects/{project_id}/users</code></pre>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="cell">
+                                                <div class="propertyname">
+                                                    <p>Delete all of the users (other than the user executing this
+                                                        command) associated with a specific project.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row margin-0">
+                                        <div class="col-md-5">
+                                            <div class="cell">
+                                                <div class="propertyname">
+                                                    <pre><code>/projects/{project_id}/users/{username}</code></pre>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="cell">
+                                                <div class="propertyname">
+                                                    <p>Delete a specific user (by username) from this specific
+                                                        project.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <hr>
+
                                 </div>
                             </div>
                         </div>
-                        <div class="row margin-0">
-                            <div class="col-md-3">
-                                <div class="cell">
-                                    <div class="propertyname">
-                                        LanguageID
-                                        <a class="lookuplink" href="javascript:;">
-                                            <i class="glyphicon glyphicon-search"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="cell">
-                                    <div class="type">
-                                        <code>Int32?</code>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="cell">
-                                    <div class="isrequired">
-                                        <span class="text-muted">No</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-5">
-                                <div class="cell">
-                                    <div class="description">
-                                        The customer's preferred language ID (ex. 0 (English), 1 (Spanish), etc.)
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+
+                        <!-- /.blog-post -->
                     </div>
-
-
-                    </div>
-                <!-- /.blog-post -->
+                </div>
             </div>
         </div>
+        <!-- /.container -->
     </div>
-</div>
-<!-- /.container -->
+    </div>
+        <!-- jQuery -->
+        <script src="/static/js/jquery-1.11.3.js"></script>
 
-<!-- jQuery -->
-<script src="/static/js/jquery-1.11.3.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('.dropdown-toggle').dropdown()
+            });
+        </script>
 
-<!-- Bootstrap Core JavaScript -->
-<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('.dropdown-toggle').dropdown()
-    });
-</script>
+        <script>
+            $(document).ready(function () {
+                $("#test0").click(function () {
+                    $("#test1").removeClass("myactive");
+                    $("#test2").removeClass("myactive");
+                    $("#test3").removeClass("myactive");
+                    $("#test4").removeClass("myactive");
+                    $("#test0").addClass("myactive");
+                });
+                $("#test1").click(function () {
+                    $("#test0").removeClass("myactive");
+                    $("#test2").removeClass("myactive");
+                    $("#test3").removeClass("myactive");
+                    $("#test4").removeClass("myactive");
+                    $("#test1").addClass("myactive");
+                });
+                $("#test2").click(function () {
+                    $("#test0").removeClass("myactive");
+                    $("#test1").removeClass("myactive");
+                    $("#test3").removeClass("myactive");
+                    $("#test4").removeClass("myactive");
+                    $("#test2").addClass("myactive");
+                });
+                $("#test3").click(function () {
+                    $("#test0").removeClass("myactive");
+                    $("#test1").removeClass("myactive");
+                    $("#test2").removeClass("myactive");
+                    $("#test4").removeClass("myactive");
+                    $("#test3").addClass("myactive");
+                });
+                $("#test3").click(function () {
+                    $("#test0").removeClass("myactive");
+                    $("#test1").removeClass("myactive");
+                    $("#test2").removeClass("myactive");
+                    $("#test4").removeClass("myactive");
+                    $("#test3").addClass("myactive");
+                });
+            })
+        </script>
 
-<script>
-    $(document).ready(function () {
-        $("#test0").click(function () {
-            $("#test1").removeClass("myactive");
-            $("#test2").removeClass("myactive");
-            $("#test3").removeClass("myactive");
-            $("#test0").addClass("myactive");
-        });
-        $("#test1").click(function () {
-            $("#test0").removeClass("myactive");
-            $("#test2").removeClass("myactive");
-            $("#test3").removeClass("myactive");
-            $("#test1").addClass("myactive");
-        });
-        $("#test2").click(function () {
-            $("#test0").removeClass("myactive");
-            $("#test1").removeClass("myactive");
-            $("#test3").removeClass("myactive");
-            $("#test2").addClass("myactive");
-        });
-        $("#test3").click(function () {
-            $("#test0").removeClass("myactive");
-            $("#test1").removeClass("myactive");
-            $("#test2").removeClass("myactive");
-            $("#test3").addClass("myactive");
-        });
-    })
-</script>
 </body>
 
 </html>
