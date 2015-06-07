@@ -11,11 +11,20 @@ import os, base64
 def get_date():
     return strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
-def get_all_tickets(project, type = 'map'):
+def get_all_tickets(username, project, type = 'map'):
 
     result = None
     try:
         cur = db.cursor()
+        cmd = 'SELECT * FROM projects_to_users WHERE username=%s'
+        cur.execute(cmd, username)
+        projects_to_users_rows = cur.fetchall()
+        project_matches_user = False
+        for row in projects_to_users_rows:
+            if row[0] == project:
+                project_matches_user = True
+        if not project_matches_user:
+            return result
         cmd = 'SELECT * FROM tickets WHERE tickets.p_id=%s'
         cur.execute(cmd, str(project))
         rows = cur.fetchall()
@@ -92,7 +101,9 @@ def get_project_for_user(username):
         cur = db.cursor()
         cmd = 'SELECT * FROM projects_to_users WHERE projects_to_users.username=%s'
         cur.execute(cmd, username)
-        result = cur.fetchone()[0]
+        val = cur.fetchone()
+        if val:
+            result = val[0]
     except:
         raise
     finally:
@@ -199,6 +210,20 @@ def get_project(project):
     result = None
     try:
         cur = db.cursor()
+        cmd = 'SELECT * FROM projects WHERE p_id=%s'
+        cur.execute(cmd, project)
+        result = convert_db_table_to_map(cur.fetchall(), cur.description)
+    except:
+        raise
+    finally:
+        if cur:
+            cur.close()
+    return result
+
+def get_project_and_its_tickets(project):
+    result = None
+    try:
+        cur = db.cursor()
         cmd = 'SELECT * FROM tickets INNER JOIN projects ON tickets.p_id = projects.p_id WHERE tickets.p_id=%s'
         cur.execute(cmd, project)
         result = convert_db_table_to_map(cur.fetchall(), cur.description)
@@ -209,14 +234,19 @@ def get_project(project):
             cur.close()
     return result
 
-def delete_project(project):
+def delete_project(username, project):
     result = False
     try:
         cur = db.cursor()
-        cmd = 'DELETE FROM projects WHERE p_id=%s'
-        cur.execute(cmd, project)
-        cmd = 'DELETE FROM projects_to_users WHERE p_id=%s'
-        cur.execute(cmd, project)
+        print(username)
+        cmd = 'SELECT * FROM projects_to_users WHERE username = %s AND p_id = %s'
+        cur.execute(cmd, (username, project))
+        rows = cur.fetchall()
+        for row in rows:
+            cmd = 'DELETE FROM projects WHERE p_id=%s'
+            cur.execute(cmd, row[0])
+            cmd = 'DELETE FROM projects_to_users WHERE p_id=%s'
+            cur.execute(cmd, row[0])
         db.commit()
         result = True
     except:
@@ -268,7 +298,10 @@ def delete_projects(username):
         rows = cur.fetchall()
         for row in rows:
             cmd = 'DELETE FROM projects WHERE p_id=%s'
-            print(row[0])
+            cur.execute(cmd, row[0])
+            cmd = 'DELETE FROM projects_to_users WHERE p_id=%s'
+            cur.execute(cmd, row[0])
+            cmd = 'DELETE FROM tickets WHERE p_id=%s'
             cur.execute(cmd, row[0])
         db.commit()
         result = True

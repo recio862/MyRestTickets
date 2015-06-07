@@ -51,9 +51,6 @@
                 <li>
                     <a href="#">about</a>
                 </li>
-                <li>
-                    <a href="#">contact</a>
-                </li>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -199,6 +196,7 @@ Authorization: Basic ***************
                 }
             },
             error: function(){
+                $("#response").append("<code>There was an error in your request!</code><br><br><br>")
 
             }
 
@@ -241,10 +239,11 @@ Authorization: Basic ***************
                 }
                 else {
                     $("#response2").empty();
-                    $("#response2").append("<code>You currently have no projects! Visit the post tools page to create your first project.</code><br><br><br>")
+                    $("#response2").append("<code>There was an error in your request!</code><br><br><br>")
                 }
             },
             error: function(){
+                    $("#response2").append("<code>There was an error in your request!</code><br><br><br>")
 
             }
 

@@ -8,8 +8,9 @@ import re
 
 
 @app.route('/projects/<int:project>/tickets', methods=['GET'])
-def get_all_tickets(project):
-    tckts_dict = dbservices.get_all_tickets(project)
+@authservices.get_user_from_session
+def get_all_tickets(username, project):
+    tckts_dict = dbservices.get_all_tickets(username, project)
     return jsonify(tckts_dict)
 
 
@@ -21,13 +22,13 @@ def get_all_projects(username):
     prjct_dict = dbservices.get_all_projects(username)
     return jsonify(prjct_dict)
 
-@app.route('/projects/<int:project>', methods=['GET'])
+@app.route('/projects/<int:project>/', methods=['GET'])
 def get_project(project):
     prjct_dict = dbservices.get_project(project)
     return jsonify(prjct_dict)
 
 
-@app.route('/projects/<int:project>', methods=['DELETE'])
+@app.route('/projects/<int:project>/', methods=['DELETE'])
 @authservices.get_user_from_session
 def delete_project(username, project):
     dbservices.delete_project(username, project)
@@ -43,7 +44,7 @@ def delete_projects(username):
 @app.route('/projects/<int:project>/tickets/', methods=['DELETE'])
 @authservices.get_user_from_session
 def delete_tickets(username, project):
-    dbservices.delete_projects(username, project)
+    dbservices.delete_tickets(username, project)
     return ('', 204)
 
 @app.route('/projects/<int:project>/tickets/<int:ticket>', methods=['GET'])
@@ -124,7 +125,7 @@ def home_page(username):
         ticket_list = []
         project = dbservices.get_project_for_user(username)
         if project:
-            ticket_list = dbservices.get_all_tickets(project, type='list')
+            ticket_list = dbservices.get_all_tickets(username, project, type='list')
         return render_template('index2.html', tickets=ticket_list, username=username)
 
 @app.route('/get')
@@ -133,7 +134,7 @@ def get_page(username):
     if not username:
         return render_template('signin.html')
     else:
-        return render_template('get.html')
+        return render_template('get.html', username = username)
 
 @app.route('/post')
 @authservices.authenticate_with_sessionid
@@ -141,7 +142,7 @@ def post_page(username):
     if not username:
         return render_template('signin.html')
     else:
-        return render_template('post.html')
+        return render_template('post.html', username = username)
 
 @app.route('/put')
 @authservices.authenticate_with_sessionid
@@ -149,7 +150,7 @@ def put_page(username):
     if not username:
         return render_template('signin.html')
     else:
-        return render_template('put.html')
+        return render_template('put.html', username = username)
 
 @app.route('/delete')
 @authservices.authenticate_with_sessionid
@@ -157,8 +158,7 @@ def delete_page(username):
     if not username:
         return render_template('signin.html')
     else:
-        return render_template('delete.html')
-
+        return render_template('delete.html' , username = username)
 
 @app.route('/api')
 @authservices.authenticate_with_sessionid
@@ -167,6 +167,14 @@ def api_page(username):
         return render_template('signin.html')
     else:
         return render_template('api.html', username=username)
+
+@app.route('/about')
+@authservices.authenticate_with_sessionid
+def about_page(username):
+    if not username:
+        return render_template('signin.html')
+    else:
+        return render_template('about.html', username=username)
 
 
 @app.route('/logout')

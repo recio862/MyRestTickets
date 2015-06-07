@@ -51,9 +51,6 @@
                 <li>
                     <a href="#">about</a>
                 </li>
-                <li>
-                    <a href="#">contact</a>
-                </li>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -94,36 +91,42 @@
                 <h3>@delete projects</h3><p>To delete all of the projects associated with your account, click the "delete" request button
                 to initiate the request. You can only delete projects that you created through your account.<br><code>Warning: this operation is irreversible!</code></p><pre class = "col-md-9"><code>Authorization: Basic ***************
 delete http://127.0.0.1:5000/projects/</code></pre>
-                <p><button type="button" class="btn btn-primary col-md-9">  delete<br></button><br></p>
+                <p><button type="button" id = "deleteprojects" class="btn btn-primary col-md-9">  delete<br></button><br></p>
                 <p><br><br><br></p>
+                <div id = "response"><p></p></div>
                 <p><br><br><br></p>
                 <hr>
                     <h3>@delete tickets</h3><p>To delete all of the tickets associated with an individual project, click the "delete" request button after specifying the project you are requesting for.
                 You can only delete tickets that you created through your account.<br><code>Warning: this operation is irreversible!</code></p>
 <pre class = "col-md-9"><code>Authorization: Basic ***************</code></pre>
 <div class="input-group col-md-9"><span class="input-group-addon " id="basic-addon2">delete http://127.0.0.1:5000/projects/</span>
-  <input type="text" class="form-control" placeholder="Project ID" aria-describedby="basic-addon2">
+  <input type="text" id = "pid2" class="form-control" placeholder="Project ID" aria-describedby="basic-addon2">
   <span class="input-group-addon" id="basic-addon2">/tickets</span>
-</div><p></p><p><button type="button" class="btn btn-primary col-md-9">  delete<br></button><br></p>
+</div><p></p><p><button type="button" id = "deletetickets" class="btn btn-primary col-md-9">  delete<br></button><br></p>
+                <div id = "response3"><p></p></div>
                 <p><br><br><br></p>
                 <hr>
                 <h3>@delete project</h3><p>To delete a single project, fill in the project id and then click the "delete" request button.
                 You can only delete a project that you created through your account.<br><code>Warning: this operation is irreversible!</code></p>
 <pre class = "col-md-9"><code>Authorization: Basic ***************</code></pre>
 <div class="input-group col-md-9"><span class="input-group-addon " id="basic-addon2">delete http://127.0.0.1:5000/projects/</span>
-  <input type="text" class="form-control" placeholder="Project ID" aria-describedby="basic-addon2">
+  <input type="text" id = "pid" class="form-control" placeholder="Project ID" aria-describedby="basic-addon2">
 
-</div><p></p><p><button type="button" class="btn btn-primary col-md-9">  delete<br></button><br></p>
+</div><p></p><p><button type="button" id = "deleteproject" class="btn btn-primary col-md-9">  delete<br></button><br></p>
+                <div id = "response2"><p></p></div>
                 <p><br><br><br></p>
                 <hr>
                 <h3>@delete ticket</h3><p>To delete a single ticket, fill in the project id and ticket id and then click the "delete" request button.
                 You can only delete a ticket that you created through your account.<br><code>Warning: this operation is irreversible!</code></p>
 <pre class = "col-md-9"><code>Authorization: Basic ***************</code></pre>
 <div class="input-group col-md-9"><span class="input-group-addon " id="basic-addon2">delete http://127.0.0.1:5000/projects/</span>
-  <input type="text" class="form-control" placeholder="Project ID" aria-describedby="basic-addon2">
+  <input type="text" id = "pid3" class="form-control" placeholder="Project ID" aria-describedby="basic-addon2">
+    <span class="input-group-addon " id="basic-addon2">/tickets/</span> <input type="text" id = "tid" class="form-control" placeholder="Ticket ID" aria-describedby="basic-addon2">
 
-</div><p></p><p><button type="button" class="btn btn-primary col-md-9">  delete<br></button><br></p>
+
+</div><p></p><p><button type="button" id = "deleteticket" class="btn btn-primary col-md-9">  delete<br></button><br></p>
                 <p><br><br><br></p>
+                <div id = "response4"><p></p></div>
                 <p><br><br><br></p>
 
             </div>
@@ -148,36 +151,17 @@ delete http://127.0.0.1:5000/projects/</code></pre>
     $("#deleteprojects").click(function () {
 
         var url = "http://127.0.0.1:5000/projects/";
-        console.log(jsondata);
+
         $.ajax({
             type: "DELETE",
             url: url, // serializes the form's elements.
-            contentType:"application/json; charset=utf-8",
-            dataType:"json",
-            data: jsondata,
             success: function (data) {
-                $("#response").empty();
-                var numElements = 0;
-                for (var key in data) {
-                    numElements++;
-                }
-                if (numElements > 0) {
-                    $("#response").append("<br><br>")
-                    for (var key in data) {
-                        $("#response").append("{<br>");
-                            $("#response").append("\"xhref\" : " + JSON.stringify(data[key], null, '\t'));
-                            $("#response").append("<br>");
-                        }
-                        $("#response").append("}<br><br><br>");
 
-                }
-                else {
-                    $("#response").empty();
-                    $("#response").append("<code>You currently have no projects! Visit the post tools page to create your first project.</code><br><br><br>")
-                }
+                    $("#response").append("<p class =\"text-success\">You have deleted all projects</p><br><br><br>")
+
             },
             error: function(){
-
+                     $("#response").append("<code>There was an error in your request</code><br><br><br>")
             }
 
 
@@ -187,42 +171,19 @@ delete http://127.0.0.1:5000/projects/</code></pre>
     });
 </script>
 <script>
-    $("#postproject").click(function () {
+    $("#deleteproject").click(function () {
 
-        var url = "http://127.0.0.1:5000/projects/"; // the script where you handle the form input.
-        var jsondata = "{\"project_name\" : \"" + $("#pname").val() + "\", " +
-            "\"project_description\" : \"" + $("#pdescription").val() + "\", " +
-            "\"project_category\" : \"" + $("#pcategory").val() + "\"}";
-        console.log(jsondata);
+        var url = "http://127.0.0.1:5000/projects/" + $("#pid").val() + "/";
         $.ajax({
-            type: "POST",
+            type: "DELETE",
             url: url, // serializes the form's elements.
-            contentType:"application/json; charset=utf-8",
-            dataType:"json",
-            data: jsondata,
             success: function (data) {
-                $("#response").empty();
-                var numElements = 0;
-                for (var key in data) {
-                    numElements++;
-                }
-                if (numElements > 0) {
-                    $("#response").append("<br><br>")
-                    for (var key in data) {
-                        $("#response").append("{<br>");
-                            $("#response").append("\"xhref\" : " + JSON.stringify(data[key], null, '\t'));
-                            $("#response").append("<br>");
-                        }
-                        $("#response").append("}<br><br><br>");
 
-                }
-                else {
-                    $("#response").empty();
-                    $("#response").append("<code>You currently have no projects! Visit the post tools page to create your first project.</code><br><br><br>")
-                }
+                    $("#response2").append("<p class =\"text-success\">You have deleted project " + $("#pid").val() + "</p><br><br><br>")
+
             },
             error: function(){
-
+                     $("#response2").append("<code>There was an error in your request</code><br><br><br>")
             }
 
 
@@ -230,44 +191,21 @@ delete http://127.0.0.1:5000/projects/</code></pre>
 
         return false; // avoid to execute the actual submit of the form.
     });
-</script>
-<script>
-    $("#postproject").click(function () {
+</script><script>
+    $("#deletetickets").click(function () {
 
-        var url = "http://127.0.0.1:5000/projects/"; // the script where you handle the form input.
-        var jsondata = "{\"project_name\" : \"" + $("#pname").val() + "\", " +
-            "\"project_description\" : \"" + $("#pdescription").val() + "\", " +
-            "\"project_category\" : \"" + $("#pcategory").val() + "\"}";
-        console.log(jsondata);
+        var url = "http://127.0.0.1:5000/projects/" + $("#pid2").val() + "/tickets/";
+
         $.ajax({
-            type: "POST",
+            type: "DELETE",
             url: url, // serializes the form's elements.
-            contentType:"application/json; charset=utf-8",
-            dataType:"json",
-            data: jsondata,
             success: function (data) {
-                $("#response").empty();
-                var numElements = 0;
-                for (var key in data) {
-                    numElements++;
-                }
-                if (numElements > 0) {
-                    $("#response").append("<br><br>")
-                    for (var key in data) {
-                        $("#response").append("{<br>");
-                            $("#response").append("\"xhref\" : " + JSON.stringify(data[key], null, '\t'));
-                            $("#response").append("<br>");
-                        }
-                        $("#response").append("}<br><br><br>");
 
-                }
-                else {
-                    $("#response").empty();
-                    $("#response").append("<code>You currently have no projects! Visit the post tools page to create your first project.</code><br><br><br>")
-                }
+                    $("#response3").append("<p class =\"text-success\">You have deleted all tickets</p><br><br><br>")
+
             },
             error: function(){
-
+                     $("#response3").append("<code>There was an error in your request</code><br><br><br>")
             }
 
 
@@ -275,44 +213,21 @@ delete http://127.0.0.1:5000/projects/</code></pre>
 
         return false; // avoid to execute the actual submit of the form.
     });
-</script>
-<script>
-    $("#postproject").click(function () {
+</script><script>
+    $("#deleteticket").click(function () {
 
-        var url = "http://127.0.0.1:5000/projects/"; // the script where you handle the form input.
-        var jsondata = "{\"project_name\" : \"" + $("#pname").val() + "\", " +
-            "\"project_description\" : \"" + $("#pdescription").val() + "\", " +
-            "\"project_category\" : \"" + $("#pcategory").val() + "\"}";
-        console.log(jsondata);
+         var url = "http://127.0.0.1:5000/projects/" + $("#pid3").val() + "/tickets/" + $("#tid").val() + "/";
+
         $.ajax({
-            type: "POST",
+            type: "DELETE",
             url: url, // serializes the form's elements.
-            contentType:"application/json; charset=utf-8",
-            dataType:"json",
-            data: jsondata,
             success: function (data) {
-                $("#response").empty();
-                var numElements = 0;
-                for (var key in data) {
-                    numElements++;
-                }
-                if (numElements > 0) {
-                    $("#response").append("<br><br>")
-                    for (var key in data) {
-                        $("#response").append("{<br>");
-                            $("#response").append("\"xhref\" : " + JSON.stringify(data[key], null, '\t'));
-                            $("#response").append("<br>");
-                        }
-                        $("#response").append("}<br><br><br>");
 
-                }
-                else {
-                    $("#response").empty();
-                    $("#response").append("<code>You currently have no projects! Visit the post tools page to create your first project.</code><br><br><br>")
-                }
+                    $("#response4").append("<p class =\"text-success\">You have deleted ticket" + $("tid").val() + "</p><br><br><br>")
+
             },
             error: function(){
-
+                     $("#response4").append("<code>There was an error in your request</code><br><br><br>")
             }
 
 

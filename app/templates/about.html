@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>@RestTickets</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+
+    <link href="/static/css/api.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://127.0.0.1:5000/">@RestTickets</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="http://127.0.0.1:5000/api">api</a>
+                </li>
+                <li class = "active">
+                    <a href="#">about</a>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="http://127.0.0.1:5000/logout">logout </a>
+                </li>
+                <li>
+                    <a class="hello">@{{ username }}</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <!-- /.navbar-collapse -->
+    </div>
+
+    <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<br><br><br><br><br>
+
+
+<div class="container-fluid main-container">
+
+    <div class="col-md-15 content">
+        <div class="panel panel-default">
+
+            <div id=5 class="panel-body">
+                <div class="blog-post">
+                    <h2 class="blog-post-title">About</h2>
+                    <!--<p>@RestTickets is a service that allows users to create, read, update, and delete resources using a simple REST interface, interacting
+                        with resources stored on a MySQL server. REST, or Representational State Transfer, is an architectural style designed around the HTTP protocol, allowing servers to deliver
+                    content in a stateless, uniform interface. This website is designed to help beginners understand how a simple REST service works. If you are totally unfamiliar with RESTful design, check out the
+                        <a href="http://en.wikipedia.org/wiki/Representational_state_transfer">wikipedia </a>page.</p>-->
+
+                    <p>This website is designed to help users understand the fundamentals of RESTful architectural design by providing a minimal REST API.
+                    The REST Tickets themselves can be thought of as just rows in a MySQL table. Each ticket property is defined by a separate column, and each user has control of their own tickets. Tickets
+                    are modeled under projects, and projects are modeled under users. Users can create and modify both projects and tickets.</p>
+                    <hr>
+
+                    <h4>How do I use this?</h4>
+
+
+                    <p>To use the API, you can either use your own client, or the built-in tools that come with this website.
+                    All of the responses are in JSON format. </p>
+
+                     <h4>What did you use to make this website?</h4>
+                    <p> This web app was built using Flask, a microframework for Python. The Flask app runs on top of Tornado server, which
+                        implements non-blocking network I/O.</p>
+
+                    <h4>How can I make an API like this?</h4>
+
+                    <p>All of this code is open sourced and available on GitHub at https://github.com/recio862/RestTickets. </p>
+
+                    <h4>Where can I yell at you about how you implemented your REST?</h4>
+
+
+                    <p>If you want to send a heated message in all caps, shoot me at rr3c1o at gmail dot com.
+                        Furthermore, if you would like to ask me any questions, feel free to message me.</p>
+
+
+
+
+                        <!-- /.blog-post -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+    </div>
+    </div>
+        <!-- jQuery -->
+        <script src="/static/js/jquery-1.11.3.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('.dropdown-toggle').dropdown()
+            });
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                $("#test0").click(function () {
+                    $("#test1").removeClass("myactive");
+                    $("#test2").removeClass("myactive");
+                    $("#test3").removeClass("myactive");
+                    $("#test4").removeClass("myactive");
+                    $("#test0").addClass("myactive");
+                });
+                $("#test1").click(function () {
+                    $("#test0").removeClass("myactive");
+                    $("#test2").removeClass("myactive");
+                    $("#test3").removeClass("myactive");
+                    $("#test4").removeClass("myactive");
+                    $("#test1").addClass("myactive");
+                });
+                $("#test2").click(function () {
+                    $("#test0").removeClass("myactive");
+                    $("#test1").removeClass("myactive");
+                    $("#test3").removeClass("myactive");
+                    $("#test4").removeClass("myactive");
+                    $("#test2").addClass("myactive");
+                });
+                $("#test3").click(function () {
+                    $("#test0").removeClass("myactive");
+                    $("#test1").removeClass("myactive");
+                    $("#test2").removeClass("myactive");
+                    $("#test4").removeClass("myactive");
+                    $("#test3").addClass("myactive");
+                });
+                $("#test3").click(function () {
+                    $("#test0").removeClass("myactive");
+                    $("#test1").removeClass("myactive");
+                    $("#test2").removeClass("myactive");
+                    $("#test4").removeClass("myactive");
+                    $("#test3").addClass("myactive");
+                });
+            })
+        </script>
+
+</body>
+
+</html>
+
+
